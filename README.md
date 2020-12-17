@@ -1,2 +1,2 @@
 # Live-Cricket-Update
-A website where you can see the live update of Cricket
+A frontend project made with ReactJS where you can see the live score of Cricket. It will also show the upcoming matches. 
