@@ -1,0 +1,134 @@
+class Scorecard extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+        <Header />
+        <Left />
+        <Score type="live" />
+        <Score type="upcoming" />
+      </div>
+    );
+  }
+}
+
+const Header = () => {
+  return (
+    <div>
+      <h1 className="text-center">Live Score!</h1>
+    </div>
+  );
+};
+
+const Left = () => {
+  return (
+    <div>
+      <p className="fixture"> Live and Upcoming Matches</p>
+    </div>
+  );
+};
+
+class Score extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      matches: []
+    };
+  }
+  componentDidMount() {
+    var status = this.props.type === "live" ? 3 : 1;
+    setInterval(() => {
+      fetch(
+        `https://rest.entitysport.com/v2/matches/?status=${status}&token=437214169d9be2a73e91d22f76f68b52`
+      )
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            this.setState({
+              matches: result.response.items
+            });
+          },
+          (error) => {
+            this.setState({
+              error
+            });
+          }
+        );
+    }, 5000);
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.matches.map((match) => {
+          var date = new Date(match.timestamp_start * 1000);
+          var localtime = date.toLocaleString();
+          var array = localtime.split(",");
+          var hours = array[1];
+          var startdate = array[0];
+          return (
+            <div key={match.match_id} className="border border-bottom border-top">
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col">
+                    <div className="container">
+                      <div className="row">
+                        <div className={`col ${this.props.type==='live' ? "matchtype-live":"matchtype-upcoming" }`}>
+                          {this.props.type === "live" ? "Live" : "Upcoming"}
+                        </div>
+                        <div className="col subtitle">{match.subtitle}</div>
+                      </div>
+                    </div>
+
+                    <div className={`${this.props.type==='live' ? "color-live":"color-upcoming" }`}>{match.venue.name}</div>
+                    <div className={`${this.props.type==='live' ? "color-live":"color-upcoming" }`}>{match.venue.location}</div>
+                    <div className={`${this.props.type==='live' ? "color-live":"color-upcoming" }`}>{hours} Local Time</div>
+                  </div>
+                  <div className="col-7 title">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-3 styleteam">
+                          <div className="teamname">{match.teama.name}</div>
+                          <div>{match.teama.scores_full}</div>
+                        </div>
+
+                        <div className="col styleteam">
+                          <img
+                            src={match.teama.logo_url}
+                            width="50"
+                            height="50"
+                          />
+                        </div>
+
+                        <div className={`col vs ${this.props.type==='live' ? "color-live":"color-upcoming" }`}>VS</div>
+
+                        <div className="col-4 styleteam">
+                          <div className="teamname">{match.teamb.name}</div>
+                          <div>{match.teamb.scores_full}</div>
+                        </div>
+                        <div className="col styleteam">
+                          <img
+                            src={match.teamb.logo_url}
+                            width="50"
+                            height="50"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={`col text-center styledate ${this.props.type==='live' ? "color-live":"color-upcoming" }`}>{startdate}</div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<Scorecard />, document.getElementById("main"));

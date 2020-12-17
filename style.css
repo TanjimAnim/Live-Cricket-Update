@@ -1,0 +1,74 @@
+.fixture{
+    background-color: #006442;
+    font-weight: 700;
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    position: relative;
+    z-index: 0;
+    width:250px;
+}
+
+.matchtype-upcoming {
+   background-color: #006442;
+    font-weight: 700;
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+    position: relative;
+    z-index: 0;
+    length:0px;
+    width:78px;
+}
+
+.matchtype-live {
+   background-color: #f47320;
+    font-weight: 700;
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+    position: relative;
+    z-index: 0;
+    length:0px;
+    width:78px;
+}
+
+.subtitle{
+  font-size:16px;
+  font-weight:700; 
+}
+
+
+
+.title {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.teamname{
+  font-size:18px;
+}
+
+.vs {
+  font-weight: 700;
+  padding:40px;
+  font-size:40px;
+}
+
+.styledate{
+  padding:50px;
+  font-weigth:bold;
+}
+
+.styleteam{
+  padding:40px;
+}
+
+.color-live{
+  color: #f47320
+}
+
+.color-upcoming{
+  color: #006442
+}
+
