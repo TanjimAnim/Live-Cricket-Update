@@ -42,7 +42,7 @@ class Score extends React.Component {
     var status = this.props.type === "live" ? 3 : 1;
     setInterval(() => {
       fetch(
-        `https://rest.entitysport.com/v2/matches/?status=${status}&token=437214169d9be2a73e91d22f76f68b52`
+        `https://rest.entitysport.com/v2/matches/?status=${status}&token=[Access_token]`
       )
         .then((res) => res.json())
         .then(
